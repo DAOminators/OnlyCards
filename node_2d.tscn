@@ -1,0 +1,64 @@
+[gd_scene load_steps=8 format=3 uid="uid://b2qywe0awht6n"]
+
+[ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://card.tscn" id="1_rm55w"]
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="2_a0oj1"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_kntej"]
+seed = -15
+frequency = 0.0021
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_bboy4"]
+noise = SubResource("FastNoiseLite_kntej")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rxohb"]
+resource_local_to_scene = true
+shader = ExtResource("2_a0oj1")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.03
+shader_parameter/burn_color = Color(1.5, 0.924, 0, 1)
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_bboy4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o4rx5"]
+resource_local_to_scene = true
+shader = ExtResource("2_a0oj1")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.03
+shader_parameter/burn_color = Color(1.5, 0.924, 0, 1)
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_bboy4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dkyxk"]
+resource_local_to_scene = true
+shader = ExtResource("2_a0oj1")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.03
+shader_parameter/burn_color = Color(1.5, 0.924, 0, 1)
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_bboy4")
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+
+[node name="Card" parent="." instance=ExtResource("1_rm55w")]
+material = SubResource("ShaderMaterial_rxohb")
+offset_left = -79.0
+offset_top = -99.0
+offset_right = 73.0
+offset_bottom = 108.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Card2" parent="." instance=ExtResource("1_rm55w")]
+material = SubResource("ShaderMaterial_o4rx5")
+offset_left = 90.0
+offset_top = -99.0
+offset_right = 242.0
+offset_bottom = 108.0
+metadata/_edit_use_anchors_ = true
+
+[node name="Card3" parent="." instance=ExtResource("1_rm55w")]
+material = SubResource("ShaderMaterial_dkyxk")
+offset_left = -251.0
+offset_top = -100.0
+offset_right = -99.0
+offset_bottom = 107.0
+metadata/_edit_use_anchors_ = true
