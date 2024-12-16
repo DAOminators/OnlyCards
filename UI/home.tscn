@@ -1,0 +1,71 @@
+[gd_scene load_steps=3 format=3 uid="uid://dwymybx7m0eex"]
+
+[ext_resource type="Script" path="res://UI script/home.gd" id="1_3ip5p"]
+[ext_resource type="Texture2D" uid="uid://bs12e7v403hn4" path="res://UI/magicstudio-art.jpg" id="1_ps3uw"]
+
+[node name="Control" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_3ip5p")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 0
+offset_left = 258.0
+offset_top = 326.0
+offset_right = 671.0
+offset_bottom = 428.0
+text = "Settings"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -734.0
+offset_top = -237.0
+offset_right = -178.0
+offset_bottom = 276.0
+grow_horizontal = 0
+grow_vertical = 2
+texture = ExtResource("1_ps3uw")
+expand_mode = 1
+
+[node name="Button2" type="Button" parent="."]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 463.0
+offset_right = 670.0
+offset_bottom = 565.0
+text = "Cards"
+
+[node name="Button3" type="Button" parent="."]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 599.0
+offset_right = 670.0
+offset_bottom = 701.0
+text = "Manage Games"
+
+[node name="Button4" type="Button" parent="."]
+layout_mode = 0
+offset_left = 257.0
+offset_top = 730.0
+offset_right = 670.0
+offset_bottom = 832.0
+text = "Profile"
+
+[node name="Button5" type="Button" parent="."]
+layout_mode = 0
+offset_left = 258.0
+offset_top = 878.0
+offset_right = 1152.0
+offset_bottom = 980.0
+text = "Start"
+
+[connection signal="pressed" from="Button5" to="." method="_on_start_pressed"]

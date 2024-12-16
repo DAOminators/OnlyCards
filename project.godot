@@ -14,10 +14,15 @@ config/name="Crypto-Cards"
 run/main_scene="res://node_2d.tscn"
 config/features=PackedStringArray("4.3", "GL Compatibility")
 
+[autoload]
+
+Gobal="*res://UI script/gobal.gd"
+
 [display]
 
-window/size/viewport_width=960
-window/size/viewport_height=540
+window/size/viewport_width=1920
+window/size/viewport_height=1080
+window/size/mode=2
 window/stretch/mode="viewport"
 
 [input]
