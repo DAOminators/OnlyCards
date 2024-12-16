@@ -1,10 +1,10 @@
 extends Node2D  # Parent Node that contains the cards
 
 # Path to the Card scene
-const CARD_SCENE_PATH = "res://scenes/card.tscn"
+const CARD_SCENE_PATH = "res://scenes/card_new.tscn"
 
 # Number of cards to create
-var n := 10  
+var n := 2 
 
 func _ready():
 	var card_scene = load(CARD_SCENE_PATH)  # Load the card scene

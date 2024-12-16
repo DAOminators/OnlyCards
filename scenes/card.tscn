@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://ccpeukrdsfbkm"]
+[gd_scene load_steps=15 format=3 uid="uid://ye7qxnny5165"]
 
 [ext_resource type="Shader" path="res://shaders/fake_3D.gdshader" id="1_7h7yf"]
 [ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="1_8jfk0"]
@@ -38,7 +38,7 @@ shader_parameter/x_rot = 0.0
 shader_parameter/inset = 0.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsth3"]
-size = Vector2(130, 175)
+size = Vector2(282, 324)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wdiqd"]
 shader = ExtResource("1_7h7yf")
@@ -102,9 +102,8 @@ text = "Queen"
 [node name="DestroyArea" type="Area2D" parent="."]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="DestroyArea"]
-position = Vector2(75, 104.5)
+position = Vector2(142, 166)
 shape = SubResource("RectangleShape2D_xsth3")
-disabled = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 visible = false

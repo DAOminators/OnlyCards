@@ -21,9 +21,13 @@ Gobal="*res://scripts/gobal.gd"
 [display]
 
 window/size/viewport_width=1920
-window/size/viewport_height=1080
+window/size/viewport_height=900
 window/size/mode=2
 window/stretch/mode="viewport"
+
+[global_group]
+
+cards=""
 
 [input]
 
@@ -36,5 +40,4 @@ window/stretch/mode="viewport"
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="gl_compatibility"
-renderer/rendering_method.mobile="gl_compatibility"
+renderer/rendering_method="mobile"

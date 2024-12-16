@@ -1,0 +1,38 @@
+[gd_scene load_steps=5 format=3 uid="uid://br23weimlqxwf"]
+
+[ext_resource type="PackedScene" uid="uid://cew2agedivo2x" path="res://scenes/UI/PlayScreen.tscn" id="1_7v5xf"]
+[ext_resource type="Script" path="res://scripts/deck_and_hand.gd" id="1_mpkcc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c5j2v"]
+size = Vector2(1916.25, 296.25)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_4uf7d"]
+size = Vector2(1359, 242)
+
+[node name="PlayerDeck" type="Node2D"]
+auto_translate_mode = 2
+
+[node name="deck" type="Area2D" parent="."]
+script = ExtResource("1_mpkcc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="deck"]
+position = Vector2(963.875, 389.125)
+shape = SubResource("RectangleShape2D_c5j2v")
+
+[node name="PlayUI" parent="." instance=ExtResource("1_7v5xf")]
+z_index = -6
+anchors_preset = 0
+anchor_right = 0.0
+anchor_bottom = 0.0
+offset_right = 1920.0
+offset_bottom = 900.0
+grow_horizontal = 1
+grow_vertical = 1
+
+[node name="deck2" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="deck2"]
+position = Vector2(1236.5, 771)
+shape = SubResource("RectangleShape2D_4uf7d")
+
+[connection signal="area_entered" from="deck" to="deck" method="_on_area_entered"]

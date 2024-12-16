@@ -1,0 +1,365 @@
+[gd_scene load_steps=15 format=3 uid="uid://c5jgwg6wta8x0"]
+
+[ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="1_by1sd"]
+[ext_resource type="Script" path="res://scripts/card.gd" id="2_1ukwe"]
+[ext_resource type="Shader" path="res://shaders/fake_3D.gdshader" id="3_mh5i2"]
+[ext_resource type="Texture2D" uid="uid://d0a3btmlyy48d" path="res://textures/Queen_of_spades2.svg.png" id="4_chf1c"]
+[ext_resource type="FontFile" uid="uid://cf1hcbjb5n342" path="res://assets/Fonts/HomeVideo-BLG6G.ttf" id="5_bqm85"]
+[ext_resource type="Texture2D" uid="uid://cmddb581ny67d" path="res://assets/Card/subbu_cute.jpg" id="6_3hjmt"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_1pg52"]
+seed = -15
+frequency = 0.0021
+fractal_octaves = 4
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_qpbr6"]
+noise = SubResource("FastNoiseLite_1pg52")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3ph3s"]
+resource_local_to_scene = true
+shader = ExtResource("1_by1sd")
+shader_parameter/dissolve_value = 1.0
+shader_parameter/burn_size = 0.03
+shader_parameter/burn_color = Color(1.5, 0.924, 0, 1)
+shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_qpbr6")
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_7aqjh"]
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lpink"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cho03"]
+resource_local_to_scene = true
+shader = ExtResource("3_mh5i2")
+shader_parameter/rect_size = Vector2(152, 207)
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xsth3"]
+size = Vector2(282, 324)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wdiqd"]
+shader = ExtResource("3_mh5i2")
+shader_parameter/rect_size = Vector2(0, 0)
+shader_parameter/fov = 90.0
+shader_parameter/cull_back = true
+shader_parameter/y_rot = 0.0
+shader_parameter/x_rot = 0.0
+shader_parameter/inset = 0.0
+
+[node name="Card" type="Button"]
+material = SubResource("ShaderMaterial_3ph3s")
+custom_minimum_size = Vector2(152, 207)
+offset_right = 152.0
+offset_bottom = 207.0
+pivot_offset = Vector2(76, 103.5)
+theme_override_styles/focus = SubResource("StyleBoxEmpty_7aqjh")
+theme_override_styles/disabled = SubResource("StyleBoxEmpty_7aqjh")
+theme_override_styles/hover = SubResource("StyleBoxEmpty_7aqjh")
+theme_override_styles/pressed = SubResource("StyleBoxEmpty_7aqjh")
+theme_override_styles/normal = SubResource("StyleBoxEmpty_7aqjh")
+script = ExtResource("2_1ukwe")
+
+[node name="Shadow" type="TextureRect" parent="."]
+visible = false
+modulate = Color(0, 0, 0, 1)
+self_modulate = Color(1, 1, 1, 0.168627)
+show_behind_parent = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 24.0
+offset_bottom = 24.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_lpink")
+expand_mode = 1
+
+[node name="CardTexture" type="TextureRect" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_cho03")
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_chf1c")
+expand_mode = 1
+
+[node name="RichTextLabel" type="RichTextLabel" parent="CardTexture"]
+visible = false
+layout_mode = 0
+offset_left = 24.0
+offset_top = -41.0
+offset_right = 136.0
+offset_bottom = -1.0
+text = "Queen"
+
+[node name="DestroyArea" type="Area2D" parent="." groups=["cards"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DestroyArea"]
+position = Vector2(142, 166)
+shape = SubResource("RectangleShape2D_xsth3")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+visible = false
+material = SubResource("ShaderMaterial_wdiqd")
+layout_mode = 0
+offset_left = -335.0
+offset_top = -352.0
+offset_right = 1025.0
+offset_bottom = 1134.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(1360, 1486)
+render_target_update_mode = 0
+
+[node name="Front" type="Control" parent="."]
+anchors_preset = 0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 58.0
+offset_bottom = 58.0
+
+[node name="ColorRect" type="ColorRect" parent="Front"]
+layout_mode = 0
+offset_left = -18.0
+offset_top = -18.0
+offset_right = 266.0
+offset_bottom = 311.0
+
+[node name="Name" type="Label" parent="Front"]
+texture_filter = 3
+layout_mode = 0
+offset_top = 262.0
+offset_right = 269.0
+offset_bottom = 292.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 22
+text = "SUBROJYOTI SEN"
+
+[node name="Tag" type="Label" parent="Front"]
+layout_mode = 0
+offset_top = 283.0
+offset_right = 269.0
+offset_bottom = 313.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 13
+text = "OPEN SOURCE CONTRIBUTOR"
+
+[node name="Photo2" type="TextureRect" parent="Front"]
+z_index = 1
+layout_mode = 0
+offset_top = -5.0
+offset_right = 249.0
+offset_bottom = 244.0
+texture = ExtResource("6_3hjmt")
+expand_mode = 1
+
+[node name="Back" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="ColorRect2" type="ColorRect" parent="Back"]
+layout_mode = 0
+offset_right = 284.0
+offset_bottom = 329.0
+
+[node name="Name2" type="Label" parent="Back"]
+texture_filter = 3
+layout_mode = 0
+offset_left = 18.0
+offset_top = 18.0
+offset_right = 269.0
+offset_bottom = 48.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 22
+text = "SUBROJYOTI SEN"
+
+[node name="Tag2" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 39.0
+offset_right = 269.0
+offset_bottom = 69.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 13
+text = "OPEN SOURCE CONTRIBUTOR"
+
+[node name="Description" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 70.0
+offset_right = 270.0
+offset_bottom = 115.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "DESCRIPTION DESCRIPTION 
+DESCRIPTION DESCRIPTION 
+DESCRIPTION DESCRIPTION 
+DESCRIPTION DESCRIPTION "
+horizontal_alignment = 3
+justification_flags = 161
+
+[node name="Scores" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 137.0
+offset_right = 67.0
+offset_bottom = 147.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "SCORES"
+
+[node name="PROPERTY1" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 207.0
+offset_right = 67.0
+offset_bottom = 217.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "PROPERTY"
+
+[node name="PROPERTY2" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 194.0
+offset_right = 67.0
+offset_bottom = 204.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "PROPERTY"
+
+[node name="PROPERTY3" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 181.0
+offset_right = 67.0
+offset_bottom = 191.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "PROPERTY"
+
+[node name="PROPERTY4" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 168.0
+offset_right = 67.0
+offset_bottom = 178.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "PROPERTY"
+
+[node name="PROPERTY5" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 155.0
+offset_right = 72.0
+offset_bottom = 165.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "PROPERTY1"
+
+[node name="SCORE1" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 207.0
+offset_right = 270.0
+offset_bottom = 217.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "scorE"
+horizontal_alignment = 2
+
+[node name="SCORE2" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 194.0
+offset_right = 270.0
+offset_bottom = 204.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "scorE"
+horizontal_alignment = 2
+
+[node name="SCORE3" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 181.0
+offset_right = 270.0
+offset_bottom = 191.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "scorE"
+horizontal_alignment = 2
+
+[node name="SCORE4" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 168.0
+offset_right = 270.0
+offset_bottom = 178.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "scorE"
+horizontal_alignment = 2
+
+[node name="SCORE5" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 221.0
+offset_top = 155.0
+offset_right = 270.0
+offset_bottom = 165.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 10
+text = "scorE"
+horizontal_alignment = 2
+
+[node name="ONLYCARDS" type="Label" parent="Back"]
+layout_mode = 0
+offset_left = 18.0
+offset_top = 287.0
+offset_right = 269.0
+offset_bottom = 317.0
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_fonts/font = ExtResource("5_bqm85")
+theme_override_font_sizes/font_size = 13
+text = "ONLYCARDS/DAOMINATORS"
+
+[node name="Photo" type="TextureRect" parent="."]
+z_index = -1
+layout_mode = 0
+offset_left = 18.0
+offset_top = 13.0
+offset_right = 267.0
+offset_bottom = 262.0
+texture = ExtResource("6_3hjmt")
+expand_mode = 1
+
+[connection signal="gui_input" from="." to="." method="_on_gui_input"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

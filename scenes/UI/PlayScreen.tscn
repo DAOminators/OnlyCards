@@ -8,26 +8,17 @@ corner_radius_top_right = 100
 corner_radius_bottom_right = 100
 corner_radius_bottom_left = 100
 
-[node name="Control" type="Control"]
+[node name="PlayUI" type="Control"]
+layout_direction = 1
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
 script = ExtResource("1_42rm4")
-
-[node name="Button" type="Button" parent="."]
-layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 126.0
-offset_top = -260.0
-offset_right = 465.0
-offset_bottom = -161.0
-grow_vertical = 0
-text = "Settings"
 
 [node name="Button2" type="Button" parent="."]
 layout_mode = 1
@@ -36,8 +27,8 @@ anchor_top = 1.0
 anchor_bottom = 1.0
 offset_left = 123.0
 offset_top = -128.0
-offset_right = 462.0
-offset_bottom = -29.0
+offset_right = 443.0
+offset_bottom = -28.0
 grow_vertical = 0
 text = "Deck"
 
@@ -52,5 +43,23 @@ offset_right = -37.0
 offset_bottom = 280.0
 grow_horizontal = 0
 theme_override_styles/panel = SubResource("StyleBoxFlat_cjtrg")
+
+[node name="Button" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 126.0
+offset_top = -260.0
+offset_right = 446.0
+offset_bottom = -160.0
+grow_vertical = 0
+text = "Settings"
+
+[node name="GridContainer" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+columns = 3
 
 [connection signal="pressed" from="Button2" to="." method="_on_Deck_pressed"]
