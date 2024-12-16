@@ -1,12 +1,11 @@
-[gd_scene load_steps=17 format=3 uid="uid://ccpeukrdsfbkm"]
+[gd_scene load_steps=15 format=3 uid="uid://ccpeukrdsfbkm"]
 
 [ext_resource type="Shader" path="res://shaders/fake_3D.gdshader" id="1_7h7yf"]
 [ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="1_8jfk0"]
 [ext_resource type="Texture2D" uid="uid://bpg0pvc0eplo" path="res://assets/Card/card-front-templateCard Front.jpg" id="2_1650l"]
 [ext_resource type="Texture2D" uid="uid://bgfv3323e4ipl" path="res://assets/Card/card-front-templateCard Back.jpg" id="3_b3vto"]
 [ext_resource type="Texture2D" uid="uid://d0a3btmlyy48d" path="res://textures/Queen_of_spades2.svg.png" id="3_nlmn6"]
-[ext_resource type="FontFile" uid="uid://cf1hcbjb5n342" path="res://assets/Fonts/HomeVideo-BLG6G.ttf" id="6_pterl"]
-[ext_resource type="Texture2D" uid="uid://cmddb581ny67d" path="res://assets/Card/subbu_cute.jpg" id="7_jqtt3"]
+[ext_resource type="Script" path="res://scripts/procedural_card.gd" id="6_alyor"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kntej"]
 seed = -15
@@ -57,7 +56,7 @@ var following_mouse: bool = false
 var last_pos: Vector2
 var velocity: Vector2
 
-@onready var card_texture: SubViewportContainer = $SubViewportContainer
+@onready var card_texture: TextureRect = $CardTexture
 @onready var shadow = $Shadow
 @onready var collision_shape = $DestroyArea/CollisionShape2D
 
@@ -130,7 +129,7 @@ func handle_mouse_click(event: InputEvent) -> void:
 			tween_handle.kill()
 		tween_handle = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween_handle.tween_property(self, \"rotation\", 0.0, 0.3)
-		#flip_card()
+		flip_card()
 		
 func _on_gui_input(event: InputEvent) -> void:
 	
@@ -196,15 +195,6 @@ shader_parameter/inset = 0.0
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_xsth3"]
 size = Vector2(130, 175)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_wdiqd"]
-shader = ExtResource("1_7h7yf")
-shader_parameter/rect_size = Vector2(0, 0)
-shader_parameter/fov = 90.0
-shader_parameter/cull_back = true
-shader_parameter/y_rot = 0.0
-shader_parameter/x_rot = 0.0
-shader_parameter/inset = 0.0
-
 [node name="Card" type="Button"]
 material = SubResource("ShaderMaterial_3ph3s")
 custom_minimum_size = Vector2(152, 207)
@@ -222,7 +212,6 @@ front_texture = ExtResource("2_1650l")
 back_texture = ExtResource("3_b3vto")
 
 [node name="Shadow" type="TextureRect" parent="."]
-visible = false
 modulate = Color(0, 0, 0, 1)
 self_modulate = Color(1, 1, 1, 0.168627)
 show_behind_parent = true
@@ -238,7 +227,6 @@ texture = SubResource("CompressedTexture2D_lpink")
 expand_mode = 1
 
 [node name="CardTexture" type="TextureRect" parent="."]
-visible = false
 material = SubResource("ShaderMaterial_cho03")
 layout_mode = 1
 anchors_preset = 15
@@ -250,12 +238,11 @@ texture = ExtResource("3_nlmn6")
 expand_mode = 1
 
 [node name="RichTextLabel" type="RichTextLabel" parent="CardTexture"]
-visible = false
 layout_mode = 0
-offset_left = 24.0
-offset_top = -41.0
-offset_right = 136.0
-offset_bottom = -1.0
+offset_left = 44.0
+offset_top = -31.0
+offset_right = 156.0
+offset_bottom = 9.0
 text = "Queen"
 
 [node name="DestroyArea" type="Area2D" parent="."]
@@ -265,277 +252,16 @@ position = Vector2(75, 104.5)
 shape = SubResource("RectangleShape2D_xsth3")
 disabled = true
 
-[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-visible = false
-material = SubResource("ShaderMaterial_wdiqd")
+[node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0
-offset_left = -335.0
-offset_top = -352.0
-offset_right = 1025.0
-offset_bottom = 1134.0
+offset_right = 151.0
+offset_bottom = 205.0
 
-[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
-transparent_bg = true
-handle_input_locally = false
-size = Vector2i(1360, 1486)
-render_target_update_mode = 0
-
-[node name="ColorRect" type="ColorRect" parent="SubViewportContainer/SubViewport"]
-offset_right = 284.0
-offset_bottom = 329.0
-
-[node name="Name" type="Label" parent="SubViewportContainer/SubViewport"]
-texture_filter = 3
-offset_left = 18.0
-offset_top = 280.0
-offset_right = 287.0
-offset_bottom = 310.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 22
-text = "SUBROJYOTI SEN"
-
-[node name="Tag" type="Label" parent="SubViewportContainer/SubViewport"]
-offset_left = 18.0
-offset_top = 301.0
-offset_right = 287.0
-offset_bottom = 331.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 13
-text = "OPEN SOURCE CONTRIBUTOR"
-
-[node name="Photo" type="TextureRect" parent="SubViewportContainer/SubViewport"]
-offset_left = 18.0
-offset_top = 13.0
-offset_right = 267.0
-offset_bottom = 262.0
-texture = ExtResource("7_jqtt3")
-expand_mode = 1
-
-[node name="ColorRect" type="ColorRect" parent="."]
-offset_right = 284.0
-offset_bottom = 329.0
-
-[node name="Name" type="Label" parent="."]
-texture_filter = 3
+[node name="Button" type="Button" parent="TextureRect"]
 layout_mode = 0
-offset_left = 18.0
-offset_top = 280.0
-offset_right = 287.0
-offset_bottom = 310.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 22
-text = "SUBROJYOTI SEN"
-
-[node name="Tag" type="Label" parent="."]
-offset_left = 18.0
-offset_top = 301.0
-offset_right = 287.0
-offset_bottom = 331.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 13
-text = "OPEN SOURCE CONTRIBUTOR"
-
-[node name="Photo" type="TextureRect" parent="."]
-layout_mode = 0
-offset_left = 18.0
-offset_top = 13.0
-offset_right = 267.0
-offset_bottom = 262.0
-texture = ExtResource("7_jqtt3")
-expand_mode = 1
-
-[node name="ColorRect2" type="ColorRect" parent="."]
-visible = false
-offset_right = 284.0
-offset_bottom = 329.0
-
-[node name="Name2" type="Label" parent="."]
-visible = false
-texture_filter = 3
-layout_mode = 0
-offset_left = 18.0
-offset_top = 18.0
-offset_right = 269.0
-offset_bottom = 48.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 22
-text = "SUBROJYOTI SEN"
-
-[node name="Tag2" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 39.0
-offset_right = 269.0
-offset_bottom = 69.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 13
-text = "OPEN SOURCE CONTRIBUTOR"
-
-[node name="Description" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 70.0
-offset_right = 270.0
-offset_bottom = 115.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "DESCRIPTION DESCRIPTION 
-DESCRIPTION DESCRIPTION 
-DESCRIPTION DESCRIPTION 
-DESCRIPTION DESCRIPTION "
-horizontal_alignment = 3
-justification_flags = 161
-
-[node name="Scores" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 137.0
-offset_right = 67.0
-offset_bottom = 147.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "SCORES"
-
-[node name="PROPERTY1" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 207.0
-offset_right = 67.0
-offset_bottom = 217.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "PROPERTY"
-
-[node name="PROPERTY2" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 194.0
-offset_right = 67.0
-offset_bottom = 204.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "PROPERTY"
-
-[node name="PROPERTY3" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 181.0
-offset_right = 67.0
-offset_bottom = 191.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "PROPERTY"
-
-[node name="PROPERTY4" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 168.0
-offset_right = 67.0
-offset_bottom = 178.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "PROPERTY"
-
-[node name="PROPERTY5" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 155.0
-offset_right = 72.0
-offset_bottom = 165.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "PROPERTY1"
-
-[node name="SCORE1" type="Label" parent="."]
-visible = false
-offset_left = 221.0
-offset_top = 207.0
-offset_right = 270.0
-offset_bottom = 217.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "scorE"
-horizontal_alignment = 2
-
-[node name="SCORE2" type="Label" parent="."]
-visible = false
-offset_left = 221.0
-offset_top = 194.0
-offset_right = 270.0
-offset_bottom = 204.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "scorE"
-horizontal_alignment = 2
-
-[node name="SCORE3" type="Label" parent="."]
-visible = false
-offset_left = 221.0
-offset_top = 181.0
-offset_right = 270.0
-offset_bottom = 191.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "scorE"
-horizontal_alignment = 2
-
-[node name="SCORE4" type="Label" parent="."]
-visible = false
-offset_left = 221.0
-offset_top = 168.0
-offset_right = 270.0
-offset_bottom = 178.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "scorE"
-horizontal_alignment = 2
-
-[node name="SCORE5" type="Label" parent="."]
-visible = false
-offset_left = 221.0
-offset_top = 155.0
-offset_right = 270.0
-offset_bottom = 165.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 10
-text = "scorE"
-horizontal_alignment = 2
-
-[node name="ONLYCARDS" type="Label" parent="."]
-visible = false
-offset_left = 18.0
-offset_top = 287.0
-offset_right = 269.0
-offset_bottom = 317.0
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_fonts/font = ExtResource("6_pterl")
-theme_override_font_sizes/font_size = 13
-text = "ONLYCARDS/DAOMINATORS"
-
-[node name="Back" type="TextureRect" parent="."]
-visible = false
-layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = ExtResource("3_b3vto")
+offset_right = 151.0
+offset_bottom = 206.0
+script = ExtResource("6_alyor")
 
 [connection signal="gui_input" from="." to="." method="_on_gui_input"]
 [connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
