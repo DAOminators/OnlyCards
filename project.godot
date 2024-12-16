@@ -16,7 +16,7 @@ config/features=PackedStringArray("4.3", "GL Compatibility")
 
 [autoload]
 
-Gobal="*res://UI script/gobal.gd"
+Gobal="*res://scripts/gobal.gd"
 
 [display]
 

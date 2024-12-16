@@ -1,6 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://b2qywe0awht6n"]
+[gd_scene load_steps=9 format=3 uid="uid://b2qywe0awht6n"]
 
-[ext_resource type="PackedScene" uid="uid://ccpeukrdsfbkm" path="res://card.tscn" id="1_rm55w"]
+[ext_resource type="Script" path="res://scripts/something.gd" id="1_bbgrm"]
+[ext_resource type="PackedScene" path="res://scenes/card.tscn" id="1_rm55w"]
 [ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="2_a0oj1"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kntej"]
@@ -36,6 +37,7 @@ shader_parameter/burn_color = Color(1.5, 0.924, 0, 1)
 shader_parameter/dissolve_texture = SubResource("NoiseTexture2D_bboy4")
 
 [node name="Node2D" type="Node2D"]
+script = ExtResource("1_bbgrm")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 
