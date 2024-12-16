@@ -1,7 +1,9 @@
-[gd_scene load_steps=12 format=3 uid="uid://ccpeukrdsfbkm"]
+[gd_scene load_steps=14 format=3 uid="uid://ccpeukrdsfbkm"]
 
 [ext_resource type="Shader" path="res://shaders/fake_3D.gdshader" id="1_7h7yf"]
 [ext_resource type="Shader" path="res://shaders/dissolve.gdshader" id="1_8jfk0"]
+[ext_resource type="Texture2D" uid="uid://bpg0pvc0eplo" path="res://assets/Card/card-front-templateCard Front.jpg" id="2_1650l"]
+[ext_resource type="Texture2D" uid="uid://bgfv3323e4ipl" path="res://assets/Card/card-front-templateCard Back.jpg" id="3_b3vto"]
 [ext_resource type="Texture2D" uid="uid://d0a3btmlyy48d" path="res://textures/Queen_of_spades2.svg.png" id="3_nlmn6"]
 
 [sub_resource type="FastNoiseLite" id="FastNoiseLite_kntej"]
@@ -33,6 +35,11 @@ script/source = "extends Button
 @export var spring: float = 150.0
 @export var damp: float = 10.0
 @export var velocity_multiplier: float = 2.0
+
+@export var front_texture: Texture
+@export var back_texture: Texture
+
+var is_front: bool = true
 
 var displacement: float = 0.0 
 var oscillator_velocity: float = 0.0
@@ -102,6 +109,10 @@ func follow_mouse(delta: float) -> void:
 	if not following_mouse: return
 	var mouse_pos: Vector2 = get_global_mouse_position()
 	global_position = mouse_pos - (size/2.0)
+	
+func flip_card() -> void:
+	is_front = !is_front
+	card_texture.texture = front_texture if is_front else back_texture
 
 func handle_mouse_click(event: InputEvent) -> void:
 	if not event is InputEventMouseButton: return
@@ -117,7 +128,8 @@ func handle_mouse_click(event: InputEvent) -> void:
 			tween_handle.kill()
 		tween_handle = create_tween().set_ease(Tween.EASE_IN_OUT).set_trans(Tween.TRANS_CUBIC)
 		tween_handle.tween_property(self, \"rotation\", 0.0, 0.3)
-
+		flip_card()
+		
 func _on_gui_input(event: InputEvent) -> void:
 	
 	handle_mouse_click(event)
@@ -168,7 +180,6 @@ func _on_mouse_exited() -> void:
 "
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_lpink"]
-load_path = "res://.godot/imported/Tiles_A_white.png-0c74c56d5fd99b731c0866e8654791bf.ctex"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cho03"]
 resource_local_to_scene = true
@@ -196,6 +207,8 @@ theme_override_styles/pressed = SubResource("StyleBoxEmpty_7aqjh")
 theme_override_styles/normal = SubResource("StyleBoxEmpty_7aqjh")
 script = SubResource("GDScript_wo784")
 velocity_multiplier = 1.0
+front_texture = ExtResource("2_1650l")
+back_texture = ExtResource("3_b3vto")
 
 [node name="Shadow" type="TextureRect" parent="."]
 modulate = Color(0, 0, 0, 1)
